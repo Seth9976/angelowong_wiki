@@ -1,0 +1,2017 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["object" == typeof document ? document.currentScript : void 0, 153165, e => {
+    "use strict";
+    var t = e.i(843476),
+        i = e.i(271645);
+    let r = "aw_email_subscribed";
+    e.s(["default", 0, function({
+        children: e,
+        enabled: o,
+        lang: n = "zh-Hans",
+        fadeColor: l = "#faf7f2",
+        cardBg: a = "#e8e0d0",
+        cardBorder: s = "#d8d0c0",
+        inputBg: c = "#faf7f2",
+        inputColor: d = "#2c1f14",
+        inputBorder: m = "#d8d0c0",
+        accentColor: p = "#c9845a"
+    }) {
+        let [f, g] = (0, i.useState)(!1), [u, y] = (0, i.useState)(""), [x, h] = (0, i.useState)("idle"), [S, b] = (0, i.useState)(!1), [j, v] = (0, i.useState)(560), k = (0, i.useRef)(null), C = (0, i.useRef)(null), w = "zh-Hant" === n, z = "#2c1f14" === d ? "#8a7d6e" : "#9a8c7e", B = "#2c1f14" === d ? "#ddd5c8" : "#3d2e22";
+        (0, i.useEffect)(() => {
+            if (b(!0), "true" === localStorage.getItem(r)) return void g(!0);
+            let e = () => {
+                C.current && v(Math.max(600, .45 * C.current.scrollHeight))
+            };
+            requestAnimationFrame(() => {
+                e(), setTimeout(e, 200)
+            })
+        }, []);
+        let T = async () => {
+            let e = u.trim();
+            if (!e || !e.includes("@")) {
+                h("error"), k.current ? .focus();
+                return
+            }
+            h("loading");
+            try {
+                (await fetch("/api/subscribe", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: e
+                    })
+                })).ok ? (h("success"), setTimeout(() => {
+                    localStorage.setItem(r, "true"), g(!0)
+                }, 600)) : h("error")
+            } catch {
+                h("error")
+            }
+        };
+        return !o || f ? (0, t.jsx)(t.Fragment, {
+            children: e
+        }) : S ? (0, t.jsxs)("div", {
+            children: [(0, t.jsx)("div", {
+                style: {
+                    maxHeight: `${j}px`,
+                    overflow: "hidden",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 50%, transparent 100%)",
+                    maskImage: "linear-gradient(to bottom, black 50%, transparent 100%)"
+                },
+                children: (0, t.jsx)("div", {
+                    ref: C,
+                    children: e
+                })
+            }), (0, t.jsx)("div", {
+                style: {
+                    textAlign: "center",
+                    margin: "2.5rem 0 2rem",
+                    color: z,
+                    fontSize: "1.1rem",
+                    letterSpacing: "0.5em",
+                    userSelect: "none"
+                },
+                children: "· · ·"
+            }), (0, t.jsxs)("div", {
+                style: {
+                    maxWidth: "34rem",
+                    margin: "0 auto",
+                    padding: "0 0 4rem"
+                },
+                children: [(0, t.jsx)("p", {
+                    style: {
+                        fontFamily: "Georgia, serif",
+                        fontStyle: "italic",
+                        fontSize: "0.78rem",
+                        letterSpacing: "0.18em",
+                        color: p,
+                        marginBottom: "1rem",
+                        textAlign: "center"
+                    },
+                    children: w ? "繼續閱讀" : "继续阅读"
+                }), (0, t.jsx)("h3", {
+                    style: {
+                        fontFamily: '"Noto Serif SC", Georgia, serif',
+                        fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
+                        fontWeight: 300,
+                        lineHeight: 1.5,
+                        color: d,
+                        textAlign: "center",
+                        marginBottom: "1rem",
+                        letterSpacing: "0.03em"
+                    },
+                    children: w ? "留下信箱，閱讀全文" : "留下邮箱，阅读全文"
+                }), (0, t.jsx)("p", {
+                    style: {
+                        fontFamily: "Georgia, serif",
+                        fontStyle: "italic",
+                        fontSize: "0.92rem",
+                        lineHeight: 1.85,
+                        color: z,
+                        textAlign: "center",
+                        marginBottom: "2rem"
+                    },
+                    children: w ? "我不會發廣告，只發值得讀的東西。\n訂閱後可免費讀所有郵件鎖定的文章，隨時可退訂。" : "我不会发广告，只发值得读的东西。\n订阅后可免费读所有邮件锁定的文章，随时可退订。"
+                }), (0, t.jsxs)("div", {
+                    style: {
+                        display: "flex",
+                        gap: "0.5rem",
+                        flexWrap: "wrap",
+                        justifyContent: "center"
+                    },
+                    children: [(0, t.jsx)("input", {
+                        ref: k,
+                        type: "email",
+                        value: u,
+                        onChange: e => {
+                            y(e.target.value), h("idle")
+                        },
+                        onKeyDown: e => "Enter" === e.key && T(),
+                        placeholder: "your@email.com",
+                        style: {
+                            flex: "1 1 200px",
+                            maxWidth: "260px",
+                            padding: "0.7rem 1rem",
+                            borderRadius: "4px",
+                            border: `1px solid ${"error"===x?p:B}`,
+                            background: c,
+                            color: d,
+                            fontSize: "0.9rem",
+                            fontFamily: "Georgia, serif",
+                            outline: "none",
+                            transition: "border-color 0.2s"
+                        }
+                    }), (0, t.jsx)("button", {
+                        onClick: T,
+                        disabled: "loading" === x || "success" === x,
+                        style: {
+                            padding: "0.7rem 1.5rem",
+                            borderRadius: "4px",
+                            border: `1px solid ${p}`,
+                            background: "success" === x ? "transparent" : p,
+                            color: "success" === x ? p : "#fff",
+                            fontSize: "0.88rem",
+                            fontWeight: 600,
+                            letterSpacing: "0.06em",
+                            fontFamily: '"Noto Serif SC", serif',
+                            cursor: "loading" === x ? "not-allowed" : "pointer",
+                            whiteSpace: "nowrap",
+                            transition: "background 0.25s, color 0.25s",
+                            opacity: "loading" === x ? .7 : 1
+                        },
+                        children: "loading" === x ? w ? "處理中…" : "处理中…" : "success" === x ? w ? "✓ 解鎖中" : "✓ 解锁中" : w ? "免費閱讀" : "免费阅读"
+                    })]
+                }), "error" === x && (0, t.jsx)("p", {
+                    style: {
+                        color: p,
+                        fontSize: "0.8rem",
+                        marginTop: "0.75rem",
+                        textAlign: "center",
+                        fontStyle: "italic",
+                        fontFamily: "Georgia, serif"
+                    },
+                    children: w ? "請輸入有效的電子郵件地址。" : "请输入有效的电子邮件地址。"
+                }), (0, t.jsx)("p", {
+                    style: {
+                        fontSize: "0.75rem",
+                        color: z,
+                        textAlign: "center",
+                        marginTop: "1.25rem",
+                        fontFamily: "Georgia, serif",
+                        fontStyle: "italic",
+                        opacity: .7
+                    },
+                    children: w ? "訂閱即表示同意收取不定期郵件，隨時可退訂。" : "订阅即表示同意收取不定期邮件，随时可退订。"
+                })]
+            })]
+        }) : null
+    }])
+}, 154111, e => {
+    "use strict";
+    var t = e.i(843476),
+        i = e.i(271645),
+        r = e.i(846932),
+        o = e.i(88653),
+        n = e.i(522016),
+        l = e.i(342724),
+        a = e.i(56691),
+        s = e.i(493681),
+        c = e.i(704401);
+
+    function d({
+        data: e,
+        size: i = 360,
+        isDark: r = !1,
+        accentColor: o = "#c9845a",
+        showValues: n = !0,
+        compact: l = !1
+    }) {
+        let a = e.length;
+        if (a < 3) return null;
+        let s = i / 2,
+            c = i / 2,
+            m = .3 * i,
+            p = l ? 0 : .15 * i;
+
+        function f(e, t) {
+            let i = -Math.PI / 2 + 2 * Math.PI * e / a;
+            return {
+                x: s + t * Math.cos(i),
+                y: c + t * Math.sin(i)
+            }
+        }
+
+        function g(t) {
+            return e.map((e, i) => {
+                let {
+                    x: r,
+                    y: o
+                } = f(i, t(i));
+                return `${0===i?"M":"L"} ${r.toFixed(2)} ${o.toFixed(2)}`
+            }).join(" ") + " Z"
+        }
+        let u = r ? "rgba(61,46,34,0.7)" : "rgba(213,202,185,0.7)",
+            y = r ? "rgba(61,46,34,0.4)" : "rgba(213,202,185,0.5)",
+            x = r ? "#ede8df" : "#1a1510",
+            h = r ? "#9a8c7e" : "#8a7d6e";
+        return (0, t.jsxs)("svg", {
+            width: i,
+            height: i,
+            viewBox: `0 0 ${i} ${i}`,
+            style: {
+                overflow: "visible"
+            },
+            "aria-hidden": "true",
+            children: [
+                [.25, .5, .75, 1].map((e, i) => (0, t.jsx)("path", {
+                    d: g(() => m * e),
+                    fill: "none",
+                    stroke: u,
+                    strokeWidth: 1 === e ? 1.5 : .8
+                }, i)), e.map((e, i) => {
+                    let r = f(i, m);
+                    return (0, t.jsx)("line", {
+                        x1: s,
+                        y1: c,
+                        x2: r.x,
+                        y2: r.y,
+                        stroke: y,
+                        strokeWidth: 1
+                    }, i)
+                }), (0, t.jsx)("path", {
+                    d: g(t => m * Math.max(.04, e[t].value / 100)),
+                    fill: `${o}28`,
+                    stroke: o,
+                    strokeWidth: 2,
+                    strokeLinejoin: "round"
+                }), e.map((e, i) => {
+                    let {
+                        x: r,
+                        y: n
+                    } = f(i, m * Math.max(.04, e.value / 100));
+                    return (0, t.jsx)("circle", {
+                        cx: r,
+                        cy: n,
+                        r: 3.5,
+                        fill: o
+                    }, e.key)
+                }), !l && e.map((e, r) => {
+                    let {
+                        x: o,
+                        y: l
+                    } = f(r, m + p), a = o < s - 8, d = o > s + 8, g = a ? "end" : d ? "start" : "middle", u = l < c - 10 ? -2 : 4 * (l > c + 10), y = Math.round(.038 * i), S = Math.round(.03 * i);
+                    return (0, t.jsxs)("g", {
+                        children: [(0, t.jsx)("text", {
+                            x: o,
+                            y: l + u,
+                            textAnchor: g,
+                            dominantBaseline: u < 0 ? "auto" : u > 0 ? "hanging" : "middle",
+                            fontSize: y,
+                            fontFamily: '"Noto Serif SC", serif',
+                            fontWeight: "500",
+                            fill: x,
+                            children: e.label
+                        }), n && (0, t.jsx)("text", {
+                            x: o,
+                            y: l + u + (u >= 0 ? 1 : -1) * (y + 3),
+                            textAnchor: g,
+                            dominantBaseline: u < 0 ? "auto" : "hanging",
+                            fontSize: S,
+                            fontFamily: '"Noto Serif SC", serif',
+                            fill: h,
+                            children: e.value
+                        })]
+                    }, e.key)
+                })
+            ]
+        })
+    }
+    var m = e.i(153165);
+    let p = {
+            hidden: {
+                opacity: 0,
+                y: 20
+            },
+            show: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                    duration: .5,
+                    ease: [.22, 1, .36, 1]
+                }
+            },
+            exit: {
+                opacity: 0,
+                y: -12,
+                transition: {
+                    duration: .25
+                }
+            }
+        },
+        f = {
+            hidden: {
+                opacity: 0,
+                x: 40
+            },
+            show: {
+                opacity: 1,
+                x: 0,
+                transition: {
+                    duration: .4,
+                    ease: [.22, 1, .36, 1]
+                }
+            },
+            exit: {
+                opacity: 0,
+                x: -30,
+                transition: {
+                    duration: .22
+                }
+            }
+        };
+
+    function g({
+        quiz: e,
+        quizTitle: i,
+        isHant: o,
+        isDark: n,
+        convert: l,
+        onStart: a,
+        pageBg: s,
+        cardBg: c,
+        borderColor: d,
+        accentColor: m,
+        titleColor: p,
+        mutedColor: f
+    }) {
+        let u = [{
+            value: e.questions.filter(e => !e.isDeepOnly).length,
+            label: l("道题")
+        }, {
+            value: e.estimatedMinutes ? ? "—",
+            label: l("分钟")
+        }, ...e.dimensions.length > 0 ? [{
+            value: e.dimensions.length,
+            label: l("个维度")
+        }] : []];
+        return (0, t.jsxs)("section", {
+            style: {
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                padding: "clamp(7rem,14vw,10rem) clamp(1.5rem,5vw,3rem) clamp(4rem,8vw,6rem)",
+                maxWidth: "720px"
+            },
+            children: [(0, t.jsxs)(r.motion.p, {
+                initial: {
+                    opacity: 0,
+                    y: 8
+                },
+                animate: {
+                    opacity: 1,
+                    y: 0
+                },
+                transition: {
+                    duration: .5,
+                    delay: .05
+                },
+                style: {
+                    fontFamily: "var(--font-display), Georgia, serif",
+                    fontStyle: "italic",
+                    color: m,
+                    fontSize: "0.78rem",
+                    letterSpacing: "0.26em",
+                    marginBottom: "clamp(1.5rem,3vw,2.5rem)",
+                    textTransform: "uppercase"
+                },
+                children: ["Thought Spectrum · ", l("思想光谱")]
+            }), (0, t.jsx)(r.motion.h1, {
+                initial: {
+                    opacity: 0,
+                    y: 16
+                },
+                animate: {
+                    opacity: 1,
+                    y: 0
+                },
+                transition: {
+                    duration: .65,
+                    delay: .12,
+                    ease: [.22, 1, .36, 1]
+                },
+                style: {
+                    fontSize: "clamp(2rem,6vw,3.6rem)",
+                    fontWeight: 300,
+                    color: p,
+                    lineHeight: 1.22,
+                    letterSpacing: "0.02em",
+                    marginBottom: "clamp(1.5rem,3vw,2rem)",
+                    fontFamily: '"Noto Serif SC", serif'
+                },
+                children: i
+            }), e.tagline && (0, t.jsx)(r.motion.p, {
+                initial: {
+                    opacity: 0
+                },
+                animate: {
+                    opacity: 1
+                },
+                transition: {
+                    duration: .5,
+                    delay: .25
+                },
+                style: {
+                    fontSize: "clamp(0.88rem,1.8vw,1rem)",
+                    fontFamily: "var(--font-display), Georgia, serif",
+                    fontStyle: "italic",
+                    color: f,
+                    lineHeight: 1.7,
+                    marginBottom: "clamp(2rem,4vw,3rem)",
+                    maxWidth: "480px"
+                },
+                children: l(e.tagline)
+            }), (0, t.jsx)(r.motion.div, {
+                initial: {
+                    scaleX: 0,
+                    originX: 0
+                },
+                animate: {
+                    scaleX: 1
+                },
+                transition: {
+                    duration: .6,
+                    delay: .3,
+                    ease: [.22, 1, .36, 1]
+                },
+                style: {
+                    height: "1px",
+                    backgroundColor: d,
+                    marginBottom: "clamp(2rem,4vw,3rem)"
+                }
+            }), (0, t.jsx)(r.motion.div, {
+                initial: {
+                    opacity: 0,
+                    y: 10
+                },
+                animate: {
+                    opacity: 1,
+                    y: 0
+                },
+                transition: {
+                    duration: .5,
+                    delay: .4
+                },
+                style: {
+                    display: "flex",
+                    gap: "0",
+                    marginBottom: "clamp(2.5rem,5vw,4rem)"
+                },
+                children: u.map((e, i) => (0, t.jsxs)("div", {
+                    style: {
+                        flex: 1,
+                        paddingRight: "clamp(1rem,3vw,2rem)",
+                        borderRight: i < u.length - 1 ? `1px solid ${d}` : "none",
+                        paddingLeft: i > 0 ? "clamp(1rem,3vw,2rem)" : "0"
+                    },
+                    children: [(0, t.jsx)("p", {
+                        style: {
+                            fontFamily: "var(--font-display), Georgia, serif",
+                            fontStyle: "italic",
+                            fontSize: "clamp(1.6rem,4vw,2.4rem)",
+                            fontWeight: 300,
+                            color: m,
+                            lineHeight: 1,
+                            marginBottom: "0.35rem"
+                        },
+                        children: e.value
+                    }), (0, t.jsx)("p", {
+                        style: {
+                            fontSize: "0.72rem",
+                            color: f,
+                            letterSpacing: "0.1em",
+                            fontFamily: '"Noto Serif SC", serif'
+                        },
+                        children: e.label
+                    })]
+                }, i))
+            }), (0, t.jsxs)(r.motion.div, {
+                initial: {
+                    opacity: 0,
+                    y: 8
+                },
+                animate: {
+                    opacity: 1,
+                    y: 0
+                },
+                transition: {
+                    duration: .45,
+                    delay: .52
+                },
+                style: {
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.85rem",
+                    alignItems: "flex-start"
+                },
+                children: [(0, t.jsxs)("button", {
+                    onClick: a,
+                    style: {
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.75rem",
+                        padding: "0.9rem 2.25rem",
+                        backgroundColor: m,
+                        color: "#faf7f2",
+                        border: "none",
+                        borderRadius: "2px",
+                        fontSize: "0.92rem",
+                        fontFamily: '"Noto Serif SC", serif',
+                        fontWeight: 500,
+                        letterSpacing: "0.1em",
+                        cursor: "pointer",
+                        transition: "opacity 0.2s ease, transform 0.2s ease"
+                    },
+                    onMouseEnter: e => {
+                        e.currentTarget.style.opacity = "0.85", e.currentTarget.style.transform = "translateY(-1px)"
+                    },
+                    onMouseLeave: e => {
+                        e.currentTarget.style.opacity = "1", e.currentTarget.style.transform = "none"
+                    },
+                    children: [l("开始测试"), (0, t.jsx)("span", {
+                        style: {
+                            fontSize: "1.1rem",
+                            lineHeight: 1
+                        },
+                        children: "→"
+                    })]
+                }), (0, t.jsx)("p", {
+                    style: {
+                        fontSize: "0.72rem",
+                        color: n ? "#4a3a2e" : "#b8b0a4",
+                        fontStyle: "italic",
+                        letterSpacing: "0.04em"
+                    },
+                    children: l("作答过程中可随时后退修改")
+                })]
+            })]
+        })
+    }
+
+    function u({
+        question: e,
+        qNumber: i,
+        total: r,
+        sections: o,
+        currentSectionIdx: n,
+        selectedIdx: l,
+        pendingAnswer: a,
+        isHant: s,
+        isDark: c,
+        convert: d,
+        onAnswer: m,
+        onBack: p,
+        canGoBack: f,
+        pageBg: g,
+        cardBg: y,
+        cardHover: x,
+        borderColor: h,
+        accentColor: S,
+        titleColor: b,
+        mutedColor: j
+    }) {
+        let v = s && e.textHant || e.text;
+        return (0, t.jsxs)("section", {
+            style: {
+                minHeight: "80vh",
+                padding: "clamp(8rem,14vw,10rem) clamp(1.5rem,5vw,3rem) clamp(4rem,8vw,6rem)",
+                maxWidth: "720px"
+            },
+            children: [(0, t.jsxs)("div", {
+                style: {
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "baseline",
+                    marginBottom: "2.5rem",
+                    flexWrap: "wrap",
+                    gap: "0.5rem"
+                },
+                children: [e.section ? (0, t.jsx)("p", {
+                    style: {
+                        fontFamily: "var(--font-display), Georgia, serif",
+                        fontStyle: "italic",
+                        color: S,
+                        fontSize: "0.8rem",
+                        letterSpacing: "0.18em"
+                    },
+                    children: d(e.section)
+                }) : (0, t.jsx)("span", {}), (0, t.jsxs)("p", {
+                    style: {
+                        fontSize: "0.78rem",
+                        color: j,
+                        letterSpacing: "0.1em"
+                    },
+                    children: [i, " / ", r]
+                })]
+            }), (0, t.jsx)("h2", {
+                style: {
+                    fontSize: "clamp(1.15rem,2.8vw,1.55rem)",
+                    fontWeight: 400,
+                    color: b,
+                    lineHeight: 1.75,
+                    letterSpacing: "0.02em",
+                    marginBottom: "2.5rem",
+                    fontFamily: '"Noto Serif SC", serif'
+                },
+                children: v
+            }), (0, t.jsx)("div", {
+                style: {
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.7rem"
+                },
+                children: e.options.map((e, i) => {
+                    let r = s && e.textHant || e.text,
+                        o = l === i || a === i,
+                        n = a === i;
+                    return (0, t.jsxs)("button", {
+                        disabled: null !== a,
+                        onClick: () => m(i),
+                        style: {
+                            width: "100%",
+                            padding: "0.85rem 1.25rem",
+                            textAlign: "left",
+                            border: `1px solid ${o?S:h}`,
+                            borderRadius: "3px",
+                            backgroundColor: o ? n ? S : `${S}22` : y,
+                            color: o && n ? "#faf7f2" : b,
+                            fontSize: "0.93rem",
+                            fontFamily: '"Noto Serif SC", serif',
+                            lineHeight: 1.6,
+                            letterSpacing: "0.02em",
+                            cursor: null !== a ? "default" : "pointer",
+                            transition: "all 0.2s ease",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.75rem"
+                        },
+                        onMouseEnter: e => {
+                            o || null !== a || (e.currentTarget.style.backgroundColor = x, e.currentTarget.style.borderColor = `${S}60`)
+                        },
+                        onMouseLeave: e => {
+                            o || null !== a || (e.currentTarget.style.backgroundColor = y, e.currentTarget.style.borderColor = h)
+                        },
+                        children: [(0, t.jsx)("span", {
+                            style: {
+                                flexShrink: 0,
+                                width: "8px",
+                                height: "8px",
+                                borderRadius: "50%",
+                                border: `1.5px solid ${o?n?"#faf7f2":S:j}`,
+                                backgroundColor: o ? n ? "#faf7f2" : S : "transparent",
+                                transition: "all 0.2s ease"
+                            }
+                        }), r]
+                    }, e._key)
+                })
+            }), (0, t.jsxs)("div", {
+                style: {
+                    marginTop: "2.5rem",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                },
+                children: [(0, t.jsxs)("button", {
+                    onClick: p,
+                    disabled: !f,
+                    style: {
+                        background: "none",
+                        border: "none",
+                        color: f ? j : "transparent",
+                        fontSize: "0.82rem",
+                        cursor: f ? "pointer" : "default",
+                        padding: "0.25rem 0",
+                        letterSpacing: "0.06em",
+                        transition: "color 0.2s ease",
+                        fontFamily: '"Noto Serif SC", serif'
+                    },
+                    onMouseEnter: e => {
+                        f && (e.currentTarget.style.color = b)
+                    },
+                    onMouseLeave: e => {
+                        f && (e.currentTarget.style.color = j)
+                    },
+                    children: ["← ", d("上一题")]
+                }), (0, t.jsx)("div", {
+                    style: {
+                        display: "flex",
+                        gap: "0.4rem",
+                        alignItems: "center"
+                    },
+                    children: o.map((e, i) => (0, t.jsx)("span", {
+                        style: {
+                            width: i === n ? "16px" : "6px",
+                            height: "6px",
+                            borderRadius: "3px",
+                            backgroundColor: i <= n ? S : h,
+                            transition: "all 0.3s ease"
+                        }
+                    }, i))
+                }), (0, t.jsxs)("span", {
+                    style: {
+                        fontSize: "0.78rem",
+                        color: j
+                    },
+                    children: [Math.round(i / r * 100), "%"]
+                })]
+            })]
+        })
+    }
+
+    function y({
+        isDark: e,
+        convert: n,
+        pageBg: l,
+        accentColor: a,
+        titleColor: s,
+        mutedColor: c
+    }) {
+        let d = [n("分析维度权重"), n("绘制思想坐标"), n("匹配哲学档案"), n("生成专属分析")],
+            [m, p] = (0, i.useState)(0);
+        return (0, i.useEffect)(() => {
+            let e = setInterval(() => p(e => (e + 1) % d.length), 400);
+            return () => clearInterval(e)
+        }, []), (0, t.jsxs)("section", {
+            style: {
+                minHeight: "80vh",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "4rem 2rem"
+            },
+            children: [(0, t.jsxs)("div", {
+                style: {
+                    position: "relative",
+                    width: "60px",
+                    height: "60px",
+                    marginBottom: "2.5rem"
+                },
+                children: [(0, t.jsx)(r.motion.div, {
+                    animate: {
+                        rotate: 360
+                    },
+                    transition: {
+                        duration: 1.5,
+                        repeat: 1 / 0,
+                        ease: "linear"
+                    },
+                    style: {
+                        position: "absolute",
+                        inset: 0,
+                        border: `2px solid ${a}22`,
+                        borderTopColor: a,
+                        borderRadius: "50%"
+                    }
+                }), (0, t.jsx)(r.motion.div, {
+                    animate: {
+                        rotate: -360
+                    },
+                    transition: {
+                        duration: 2.5,
+                        repeat: 1 / 0,
+                        ease: "linear"
+                    },
+                    style: {
+                        position: "absolute",
+                        inset: "10px",
+                        border: `1px solid ${a}44`,
+                        borderBottomColor: a,
+                        borderRadius: "50%"
+                    }
+                })]
+            }), (0, t.jsx)(o.AnimatePresence, {
+                mode: "wait",
+                children: (0, t.jsx)(r.motion.p, {
+                    initial: {
+                        opacity: 0,
+                        y: 6
+                    },
+                    animate: {
+                        opacity: 1,
+                        y: 0
+                    },
+                    exit: {
+                        opacity: 0,
+                        y: -6
+                    },
+                    transition: {
+                        duration: .3
+                    },
+                    style: {
+                        color: c,
+                        fontSize: "0.88rem",
+                        fontFamily: '"Noto Serif SC", serif',
+                        letterSpacing: "0.1em"
+                    },
+                    children: d[m]
+                }, m)
+            })]
+        })
+    }
+
+    function x({
+        quiz: e,
+        quizTitle: i,
+        resultProfile: o,
+        radarData: n,
+        scores: l,
+        isHant: a,
+        isDark: s,
+        convert: c,
+        nickname: p,
+        nicknameInput: f,
+        nicknameSet: g,
+        onNicknameChange: u,
+        onNicknameSubmit: y,
+        shareState: S,
+        onGenerateShare: b,
+        shareCardRef: j,
+        pageBg: v,
+        cardBg: k,
+        borderColor: C,
+        accentColor: w,
+        subAccent: z,
+        titleColor: B,
+        mutedColor: T,
+        inputBg: F
+    }) {
+        let H = a && o.titleHant || o.title;
+        return (0, t.jsx)("section", {
+            style: {
+                padding: "clamp(8rem,14vw,10rem) clamp(1.5rem,5vw,3rem) clamp(4rem,8vw,7rem)"
+            },
+            children: (0, t.jsxs)("div", {
+                style: {
+                    maxWidth: "820px"
+                },
+                children: [(0, t.jsxs)(r.motion.div, {
+                    initial: {
+                        opacity: 0
+                    },
+                    animate: {
+                        opacity: 1
+                    },
+                    transition: {
+                        duration: .7,
+                        delay: .1
+                    },
+                    children: [(0, t.jsxs)("p", {
+                        style: {
+                            fontFamily: "var(--font-display), Georgia, serif",
+                            fontStyle: "italic",
+                            color: w,
+                            fontSize: "0.8rem",
+                            letterSpacing: "0.22em",
+                            marginBottom: "0.75rem"
+                        },
+                        children: [c("你的思想坐标"), " · Thought Spectrum"]
+                    }), (0, t.jsx)("h1", {
+                        style: {
+                            fontSize: "clamp(2rem,6vw,3.5rem)",
+                            fontFamily: "var(--font-display), Georgia, serif",
+                            fontStyle: "italic",
+                            fontWeight: 400,
+                            color: B,
+                            lineHeight: 1.2,
+                            letterSpacing: "0.02em",
+                            marginBottom: "0.5rem"
+                        },
+                        children: H
+                    }), o.subtitle && (0, t.jsx)("p", {
+                        style: {
+                            fontSize: "1rem",
+                            color: w,
+                            fontFamily: '"Noto Serif SC", serif',
+                            marginBottom: "2.5rem",
+                            lineHeight: 1.6
+                        },
+                        children: o.subtitle
+                    })]
+                }), n.length > 0 && (0, t.jsx)(r.motion.div, {
+                    initial: {
+                        opacity: 0,
+                        scale: .9
+                    },
+                    animate: {
+                        opacity: 1,
+                        scale: 1
+                    },
+                    transition: {
+                        duration: .6,
+                        delay: .3
+                    },
+                    style: {
+                        display: "flex",
+                        justifyContent: "center",
+                        marginBottom: "3rem"
+                    },
+                    children: (0, t.jsx)(d, {
+                        data: n,
+                        size: 360,
+                        isDark: s,
+                        accentColor: w,
+                        showValues: !0
+                    })
+                }), (0, t.jsx)(r.motion.p, {
+                    initial: {
+                        opacity: 0,
+                        y: 12
+                    },
+                    animate: {
+                        opacity: 1,
+                        y: 0
+                    },
+                    transition: {
+                        duration: .5,
+                        delay: .5
+                    },
+                    style: {
+                        fontSize: "1rem",
+                        color: T,
+                        lineHeight: 1.9,
+                        maxWidth: "660px",
+                        fontFamily: '"Noto Serif SC", serif',
+                        marginBottom: "3rem"
+                    },
+                    children: c(o.description)
+                }), e.dimensions.length > 0 && (0, t.jsxs)(r.motion.div, {
+                    initial: {
+                        opacity: 0
+                    },
+                    animate: {
+                        opacity: 1
+                    },
+                    transition: {
+                        duration: .5,
+                        delay: .65
+                    },
+                    style: {
+                        marginBottom: "3rem"
+                    },
+                    children: [(0, t.jsx)("p", {
+                        style: {
+                            fontSize: "0.78rem",
+                            color: T,
+                            letterSpacing: "0.12em",
+                            marginBottom: "1.25rem",
+                            fontFamily: "var(--font-display), Georgia, serif",
+                            fontStyle: "italic"
+                        },
+                        children: c("维度分布")
+                    }), (0, t.jsx)("div", {
+                        style: {
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "0.85rem",
+                            maxWidth: "560px"
+                        },
+                        children: e.dimensions.map(e => {
+                            let i = l[e.key] ? ? 50,
+                                o = a && e.titleHant || e.title;
+                            return (0, t.jsxs)("div", {
+                                children: [(0, t.jsxs)("div", {
+                                    style: {
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        fontSize: "0.8rem",
+                                        color: T,
+                                        marginBottom: "0.35rem",
+                                        letterSpacing: "0.04em",
+                                        fontFamily: '"Noto Serif SC", serif'
+                                    },
+                                    children: [(0, t.jsx)("span", {
+                                        children: e.lowLabel || "-"
+                                    }), (0, t.jsx)("span", {
+                                        style: {
+                                            color: B,
+                                            fontWeight: 500
+                                        },
+                                        children: o
+                                    }), (0, t.jsx)("span", {
+                                        children: e.highLabel || "-"
+                                    })]
+                                }), (0, t.jsxs)("div", {
+                                    style: {
+                                        height: "6px",
+                                        borderRadius: "3px",
+                                        backgroundColor: s ? "#2a1f15" : "#e0d8cc",
+                                        position: "relative",
+                                        overflow: "hidden"
+                                    },
+                                    children: [(0, t.jsx)(r.motion.div, {
+                                        initial: {
+                                            width: 0
+                                        },
+                                        animate: {
+                                            width: `${i}%`
+                                        },
+                                        transition: {
+                                            duration: .8,
+                                            delay: .1,
+                                            ease: [.22, 1, .36, 1]
+                                        },
+                                        style: {
+                                            position: "absolute",
+                                            left: 0,
+                                            top: 0,
+                                            bottom: 0,
+                                            backgroundColor: e.color || w,
+                                            borderRadius: "3px"
+                                        }
+                                    }), (0, t.jsx)("div", {
+                                        style: {
+                                            position: "absolute",
+                                            left: "50%",
+                                            top: 0,
+                                            bottom: 0,
+                                            width: "1px",
+                                            backgroundColor: s ? "#3d2e2280" : "#c4bdb070"
+                                        }
+                                    })]
+                                })]
+                            }, e.key)
+                        })
+                    })]
+                }), (0, t.jsx)("div", {
+                    style: {
+                        textAlign: "center",
+                        marginBottom: "2.5rem",
+                        color: T,
+                        fontSize: "1.1rem",
+                        letterSpacing: "0.5em",
+                        userSelect: "none"
+                    },
+                    children: "· · ·"
+                }), (0, t.jsx)(m.default, {
+                    enabled: !0,
+                    lang: a ? "zh-Hant" : "zh-Hans",
+                    fadeColor: v,
+                    cardBg: k,
+                    cardBorder: C,
+                    inputBg: F,
+                    inputColor: s ? "#ede8df" : "#2c1f14",
+                    inputBorder: C,
+                    accentColor: w,
+                    children: (0, t.jsx)(h, {
+                        quiz: e,
+                        resultProfile: o,
+                        scores: l,
+                        isHant: a,
+                        isDark: s,
+                        convert: c,
+                        titleColor: B,
+                        mutedColor: T,
+                        accentColor: w,
+                        subAccent: z,
+                        borderColor: C,
+                        cardBg: k,
+                        nickname: p,
+                        nicknameInput: f,
+                        nicknameSet: g,
+                        onNicknameChange: u,
+                        onNicknameSubmit: y,
+                        shareState: S,
+                        onGenerateShare: b,
+                        shareCardRef: j,
+                        inputBg: F,
+                        quizTitle: e.title
+                    })
+                })]
+            })
+        })
+    }
+
+    function h({
+        quiz: e,
+        resultProfile: i,
+        scores: l,
+        isHant: a,
+        isDark: s,
+        convert: c,
+        titleColor: d,
+        mutedColor: m,
+        accentColor: p,
+        subAccent: f,
+        borderColor: g,
+        cardBg: u,
+        inputBg: y,
+        nickname: x,
+        nicknameInput: b,
+        nicknameSet: j,
+        onNicknameChange: v,
+        onNicknameSubmit: k,
+        shareState: C,
+        onGenerateShare: w,
+        shareCardRef: z,
+        quizTitle: B
+    }) {
+        let T = i.deepDescription ? .split("\n\n").filter(e => e.trim().length > 0) ? ? [];
+        return (0, t.jsxs)("div", {
+            children: [T.length > 0 && (0, t.jsxs)("div", {
+                style: {
+                    marginBottom: "3rem"
+                },
+                children: [(0, t.jsx)("p", {
+                    style: {
+                        fontSize: "0.78rem",
+                        color: m,
+                        letterSpacing: "0.12em",
+                        marginBottom: "1.5rem",
+                        fontFamily: "var(--font-display), Georgia, serif",
+                        fontStyle: "italic"
+                    },
+                    children: c("深度分析")
+                }), T.map((e, i) => (0, t.jsx)("p", {
+                    style: {
+                        fontSize: "0.97rem",
+                        color: m,
+                        lineHeight: 1.95,
+                        marginBottom: "1.4rem",
+                        fontFamily: '"Noto Serif SC", serif'
+                    },
+                    children: e
+                }, i))]
+            }), i.youtubeLinks && i.youtubeLinks.length > 0 && (0, t.jsxs)("div", {
+                style: {
+                    marginBottom: "3.5rem"
+                },
+                children: [(0, t.jsxs)("p", {
+                    style: {
+                        fontSize: "0.78rem",
+                        color: m,
+                        letterSpacing: "0.12em",
+                        marginBottom: "1.25rem",
+                        fontFamily: "var(--font-display), Georgia, serif",
+                        fontStyle: "italic"
+                    },
+                    children: [c("专属推荐"), " · ", c("根据你的坐标，精选以下内容")]
+                }), (0, t.jsx)("div", {
+                    style: {
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.75rem"
+                    },
+                    children: i.youtubeLinks.map((e, i) => (0, t.jsxs)(n.default, {
+                        href: `https://www.youtube.com/watch?v=${e.youtubeId}`,
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        style: {
+                            display: "flex",
+                            gap: "1rem",
+                            alignItems: "center",
+                            padding: "0.9rem 1.1rem",
+                            border: `1px solid ${g}`,
+                            borderRadius: "3px",
+                            backgroundColor: u,
+                            textDecoration: "none",
+                            transition: "border-color 0.2s ease"
+                        },
+                        onMouseEnter: e => e.currentTarget.style.borderColor = `${p}70`,
+                        onMouseLeave: e => e.currentTarget.style.borderColor = g,
+                        children: [(0, t.jsx)("img", {
+                            src: `https://img.youtube.com/vi/${e.youtubeId}/mqdefault.jpg`,
+                            alt: e.title,
+                            style: {
+                                width: "80px",
+                                height: "45px",
+                                objectFit: "cover",
+                                borderRadius: "2px",
+                                flexShrink: 0
+                            }
+                        }), (0, t.jsxs)("div", {
+                            children: [(0, t.jsx)("p", {
+                                style: {
+                                    fontSize: "0.88rem",
+                                    color: d,
+                                    fontFamily: '"Noto Serif SC", serif',
+                                    marginBottom: "0.2rem",
+                                    lineHeight: 1.5
+                                },
+                                children: e.title
+                            }), (0, t.jsx)("p", {
+                                style: {
+                                    fontSize: "0.76rem",
+                                    color: m,
+                                    lineHeight: 1.5
+                                },
+                                children: e.reason
+                            })]
+                        }), (0, t.jsx)("span", {
+                            style: {
+                                marginLeft: "auto",
+                                flexShrink: 0,
+                                fontSize: "0.75rem",
+                                color: p,
+                                letterSpacing: "0.06em"
+                            },
+                            children: "↗"
+                        })]
+                    }, i))
+                })]
+            }), (0, t.jsxs)("div", {
+                style: {
+                    borderTop: `1px solid ${g}`,
+                    paddingTop: "3rem"
+                },
+                children: [(0, t.jsxs)("div", {
+                    style: {
+                        marginBottom: "2rem"
+                    },
+                    children: [(0, t.jsx)("p", {
+                        style: {
+                            fontFamily: "var(--font-display), Georgia, serif",
+                            fontStyle: "italic",
+                            color: p,
+                            fontSize: "0.78rem",
+                            letterSpacing: "0.22em",
+                            marginBottom: "0.5rem"
+                        },
+                        children: "Share"
+                    }), (0, t.jsx)("h3", {
+                        style: {
+                            fontSize: "1.15rem",
+                            fontWeight: 400,
+                            color: d,
+                            letterSpacing: "0.02em",
+                            fontFamily: '"Noto Serif SC", serif'
+                        },
+                        children: c("生成你的专属坐标图")
+                    })]
+                }), (0, t.jsx)(o.AnimatePresence, {
+                    mode: "wait",
+                    children: j ? (0, t.jsxs)(r.motion.div, {
+                        initial: {
+                            opacity: 0,
+                            y: 10
+                        },
+                        animate: {
+                            opacity: 1,
+                            y: 0
+                        },
+                        exit: {
+                            opacity: 0,
+                            y: -10
+                        },
+                        transition: {
+                            duration: .35
+                        },
+                        children: [(0, t.jsx)("div", {
+                            style: {
+                                marginBottom: "1.75rem",
+                                maxWidth: "390px",
+                                borderRadius: "4px",
+                                overflow: "hidden",
+                                boxShadow: "0 8px 40px rgba(0,0,0,0.12)"
+                            },
+                            children: (0, t.jsx)(S, {
+                                cardRef: z,
+                                quizTitle: B,
+                                profileTitle: a && i.titleHant || i.title,
+                                profileSubtitle: i.subtitle,
+                                nickname: x,
+                                radarData: [],
+                                scores: l,
+                                dimensions: e.dimensions,
+                                isHant: a,
+                                accentColor: "#c9845a",
+                                quizSlug: e.slug
+                            })
+                        }), (0, t.jsxs)("div", {
+                            style: {
+                                display: "flex",
+                                gap: "1rem",
+                                alignItems: "center",
+                                flexWrap: "wrap"
+                            },
+                            children: [(0, t.jsxs)("button", {
+                                onClick: w,
+                                disabled: "generating" === C,
+                                style: {
+                                    padding: "0.85rem 2.25rem",
+                                    backgroundColor: "done" === C ? "#5a9a5a" : p,
+                                    color: "#faf7f2",
+                                    border: "none",
+                                    borderRadius: "2px",
+                                    fontSize: "0.92rem",
+                                    fontFamily: '"Noto Serif SC", serif',
+                                    fontWeight: 500,
+                                    cursor: "generating" === C ? "wait" : "pointer",
+                                    transition: "background-color 0.35s ease",
+                                    letterSpacing: "0.06em",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "0.5rem"
+                                },
+                                children: ["generating" === C && (0, t.jsx)(r.motion.span, {
+                                    animate: {
+                                        rotate: 360
+                                    },
+                                    transition: {
+                                        duration: 1,
+                                        repeat: 1 / 0,
+                                        ease: "linear"
+                                    },
+                                    style: {
+                                        display: "inline-block",
+                                        fontSize: "0.9rem"
+                                    },
+                                    children: "◌"
+                                }), "idle" === C && "↓ ", "done" === C && "✓ ", c("generating" === C ? "生成中…" : "done" === C ? "已保存到相册" : "保存分享图")]
+                            }), (0, t.jsx)("button", {
+                                onClick: () => {
+                                    v("")
+                                },
+                                style: {
+                                    background: "none",
+                                    border: "none",
+                                    color: m,
+                                    fontSize: "0.8rem",
+                                    cursor: "pointer",
+                                    padding: 0,
+                                    fontFamily: '"Noto Serif SC", serif',
+                                    letterSpacing: "0.04em",
+                                    transition: "color 0.2s ease"
+                                },
+                                onMouseEnter: e => e.currentTarget.style.color = d,
+                                onMouseLeave: e => e.currentTarget.style.color = m,
+                                children: c("重新设置昵称")
+                            })]
+                        }), "done" === C && (0, t.jsx)(r.motion.p, {
+                            initial: {
+                                opacity: 0,
+                                y: 4
+                            },
+                            animate: {
+                                opacity: 1,
+                                y: 0
+                            },
+                            style: {
+                                marginTop: "0.75rem",
+                                fontSize: "0.78rem",
+                                color: m,
+                                fontStyle: "italic",
+                                fontFamily: "Georgia, serif"
+                            },
+                            children: c("图片已保存，欢迎分享至微博、Twitter 或朋友圈。")
+                        })]
+                    }, "share-step") : (0, t.jsx)(r.motion.div, {
+                        initial: {
+                            opacity: 0,
+                            y: 10
+                        },
+                        animate: {
+                            opacity: 1,
+                            y: 0
+                        },
+                        exit: {
+                            opacity: 0,
+                            y: -10
+                        },
+                        transition: {
+                            duration: .35
+                        },
+                        children: (0, t.jsxs)("div", {
+                            style: {
+                                backgroundColor: s ? "#1c1510" : "#f0ebe0",
+                                border: `1px solid ${s?"#3d2e22":"#d4cdc3"}`,
+                                borderRadius: "4px",
+                                padding: "clamp(1.75rem, 4vw, 2.5rem)",
+                                position: "relative",
+                                overflow: "hidden",
+                                maxWidth: "560px"
+                            },
+                            children: [(0, t.jsx)("div", {
+                                style: {
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    height: "2px",
+                                    backgroundColor: p
+                                }
+                            }), (0, t.jsxs)("p", {
+                                style: {
+                                    fontFamily: "var(--font-display), Georgia, serif",
+                                    fontStyle: "italic",
+                                    color: p,
+                                    fontSize: "0.72rem",
+                                    letterSpacing: "0.22em",
+                                    marginBottom: "1.25rem"
+                                },
+                                children: ["Thought Spectrum · ", c("思想光谱")]
+                            }), (0, t.jsx)("p", {
+                                style: {
+                                    fontSize: "0.97rem",
+                                    color: s ? "#ede8df" : "#1a1510",
+                                    fontFamily: '"Noto Serif SC", serif',
+                                    lineHeight: 1.8,
+                                    marginBottom: "0.4rem"
+                                },
+                                children: c("你的思想坐标将被铸成一张图。")
+                            }), (0, t.jsx)("p", {
+                                style: {
+                                    fontSize: "0.83rem",
+                                    color: m,
+                                    fontFamily: '"Noto Serif SC", serif',
+                                    lineHeight: 1.7,
+                                    marginBottom: "2rem"
+                                },
+                                children: c("留一个名字，或以匿名的方式记录这一刻。")
+                            }), (0, t.jsxs)("div", {
+                                style: {
+                                    display: "flex",
+                                    gap: "0.6rem",
+                                    flexWrap: "wrap"
+                                },
+                                children: [(0, t.jsx)("input", {
+                                    type: "text",
+                                    maxLength: 20,
+                                    value: b,
+                                    onChange: e => v(e.target.value),
+                                    onKeyDown: e => "Enter" === e.key && k(),
+                                    placeholder: c("你的名字（或留空）"),
+                                    style: {
+                                        flex: "1 1 180px",
+                                        maxWidth: "260px",
+                                        padding: "0.75rem 1rem",
+                                        backgroundColor: y,
+                                        border: `1px solid ${s?"#3d2e22":"#d4cdc3"}`,
+                                        borderRadius: "2px",
+                                        color: d,
+                                        fontSize: "0.9rem",
+                                        fontFamily: '"Noto Serif SC", serif',
+                                        outline: "none",
+                                        letterSpacing: "0.04em"
+                                    }
+                                }), (0, t.jsxs)("button", {
+                                    onClick: k,
+                                    style: {
+                                        padding: "0.75rem 1.75rem",
+                                        backgroundColor: p,
+                                        color: "#faf7f2",
+                                        border: "none",
+                                        borderRadius: "2px",
+                                        fontSize: "0.88rem",
+                                        fontFamily: '"Noto Serif SC", serif',
+                                        fontWeight: 500,
+                                        cursor: "pointer",
+                                        whiteSpace: "nowrap",
+                                        letterSpacing: "0.08em",
+                                        transition: "opacity 0.2s ease"
+                                    },
+                                    onMouseEnter: e => e.currentTarget.style.opacity = "0.85",
+                                    onMouseLeave: e => e.currentTarget.style.opacity = "1",
+                                    children: [c("确认"), " →"]
+                                })]
+                            }), (0, t.jsx)("p", {
+                                style: {
+                                    fontSize: "0.72rem",
+                                    color: s ? "#5a4e44" : "#a89880",
+                                    fontFamily: "Georgia, serif",
+                                    fontStyle: "italic",
+                                    marginTop: "1rem",
+                                    letterSpacing: "0.03em"
+                                },
+                                children: c("仅用于显示在分享图上，不会被收集")
+                            })]
+                        })
+                    }, "nickname-step")
+                })]
+            }), (0, t.jsx)("div", {
+                style: {
+                    marginTop: "3rem",
+                    paddingTop: "2rem",
+                    borderTop: `1px solid ${g}`
+                },
+                children: (0, t.jsxs)(n.default, {
+                    href: `/quiz/${e.slug}`,
+                    onClick: () => window.location.reload(),
+                    style: {
+                        fontSize: "0.82rem",
+                        color: m,
+                        letterSpacing: "0.06em",
+                        textDecoration: "none",
+                        fontFamily: '"Noto Serif SC", serif',
+                        transition: "color 0.2s ease"
+                    },
+                    onMouseEnter: e => e.currentTarget.style.color = p,
+                    onMouseLeave: e => e.currentTarget.style.color = m,
+                    children: ["↺ ", c("重新作答")]
+                })
+            })]
+        })
+    }
+
+    function S({
+        cardRef: r,
+        quizTitle: o,
+        profileTitle: n,
+        profileSubtitle: l,
+        nickname: a,
+        scores: s,
+        dimensions: c,
+        isHant: d,
+        accentColor: m,
+        quizSlug: p
+    }) {
+        let f = "#e8e0d0",
+            g = "#d8d0c0",
+            u = "#2c1f14",
+            y = "#8a7d6e",
+            x = "#c9845a",
+            h = "#c4bdb0",
+            [b, j] = (0, i.useState)(null),
+            v = `https://angelowong.wiki/quiz/${p}`;
+        return (0, i.useEffect)(() => {
+            let t = !1;
+            return e.A(673378).then(e => {
+                e.toDataURL(v, {
+                    width: 96,
+                    margin: 1,
+                    color: {
+                        dark: "#2c1f14",
+                        light: "#f0ece3"
+                    },
+                    errorCorrectionLevel: "M"
+                }).then(e => {
+                    t || j(e)
+                })
+            }), () => {
+                t = !0
+            }
+        }, [v]), (0, t.jsxs)("div", {
+            ref: r,
+            style: {
+                width: "390px",
+                backgroundColor: "#f0ece3",
+                fontFamily: '"Noto Serif SC", Georgia, serif',
+                padding: "32px 28px 28px",
+                position: "relative",
+                border: `1px solid ${g}`,
+                borderRadius: "0px"
+            },
+            children: [(0, t.jsx)("div", {
+                style: {
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: "3px",
+                    backgroundColor: x
+                }
+            }), (0, t.jsxs)("div", {
+                style: {
+                    marginBottom: "22px"
+                },
+                children: [(0, t.jsx)("p", {
+                    style: {
+                        fontSize: "9px",
+                        color: x,
+                        letterSpacing: "0.24em",
+                        marginBottom: "3px",
+                        fontStyle: "italic",
+                        fontFamily: "Georgia, serif"
+                    },
+                    children: "THOUGHT SPECTRUM · 思想光谱"
+                }), (0, t.jsx)("p", {
+                    style: {
+                        fontSize: "11px",
+                        color: y,
+                        letterSpacing: "0.06em",
+                        lineHeight: 1.5
+                    },
+                    children: o
+                })]
+            }), (0, t.jsxs)("div", {
+                style: {
+                    marginBottom: "18px",
+                    paddingBottom: "18px",
+                    borderBottom: `1px solid ${g}`
+                },
+                children: [(0, t.jsx)("p", {
+                    style: {
+                        fontSize: "10px",
+                        color: y,
+                        marginBottom: "3px",
+                        letterSpacing: "0.1em"
+                    },
+                    children: "测试者"
+                }), (0, t.jsx)("p", {
+                    style: {
+                        fontSize: "22px",
+                        color: u,
+                        letterSpacing: "0.02em",
+                        fontWeight: 300
+                    },
+                    children: a || "匿名思想者"
+                })]
+            }), (0, t.jsxs)("div", {
+                style: {
+                    marginBottom: "18px"
+                },
+                children: [(0, t.jsx)("p", {
+                    style: {
+                        fontSize: "10px",
+                        color: y,
+                        letterSpacing: "0.1em",
+                        marginBottom: "5px"
+                    },
+                    children: "思想坐标"
+                }), (0, t.jsx)("p", {
+                    style: {
+                        fontSize: "20px",
+                        color: u,
+                        lineHeight: 1.3,
+                        fontStyle: "italic",
+                        fontFamily: "Georgia, serif",
+                        marginBottom: "5px"
+                    },
+                    children: n
+                }), l && (0, t.jsx)("p", {
+                    style: {
+                        fontSize: "11px",
+                        color: x,
+                        lineHeight: 1.6
+                    },
+                    children: l
+                })]
+            }), (0, t.jsx)("div", {
+                style: {
+                    marginBottom: "20px",
+                    backgroundColor: f,
+                    borderRadius: "3px",
+                    padding: "14px 16px"
+                },
+                children: c.map((e, i) => {
+                    let r = s[e.key] ? ? 50,
+                        o = d && e.titleHant || e.title;
+                    return (0, t.jsxs)("div", {
+                        style: {
+                            marginBottom: i < c.length - 1 ? "10px" : "0"
+                        },
+                        children: [(0, t.jsxs)("div", {
+                            style: {
+                                display: "flex",
+                                justifyContent: "space-between",
+                                marginBottom: "4px"
+                            },
+                            children: [(0, t.jsx)("span", {
+                                style: {
+                                    fontSize: "10px",
+                                    color: y,
+                                    letterSpacing: "0.04em"
+                                },
+                                children: o
+                            }), (0, t.jsx)("span", {
+                                style: {
+                                    fontSize: "10px",
+                                    color: x,
+                                    fontWeight: 500
+                                },
+                                children: r
+                            })]
+                        }), (0, t.jsxs)("div", {
+                            style: {
+                                height: "4px",
+                                backgroundColor: g,
+                                borderRadius: "2px",
+                                position: "relative"
+                            },
+                            children: [(0, t.jsx)("div", {
+                                style: {
+                                    height: "100%",
+                                    width: `${r}%`,
+                                    backgroundColor: e.color || x,
+                                    borderRadius: "2px"
+                                }
+                            }), (0, t.jsx)("div", {
+                                style: {
+                                    position: "absolute",
+                                    left: "50%",
+                                    top: 0,
+                                    bottom: 0,
+                                    width: "1px",
+                                    backgroundColor: h
+                                }
+                            })]
+                        })]
+                    }, e.key)
+                })
+            }), (0, t.jsxs)("div", {
+                style: {
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                    paddingTop: "16px",
+                    borderTop: `1px solid ${g}`
+                },
+                children: [(0, t.jsxs)("div", {
+                    children: [(0, t.jsx)("p", {
+                        style: {
+                            fontSize: "11px",
+                            color: x,
+                            letterSpacing: "0.1em",
+                            marginBottom: "2px",
+                            fontWeight: 500
+                        },
+                        children: "angelowong.wiki"
+                    }), (0, t.jsx)("p", {
+                        style: {
+                            fontSize: "10px",
+                            color: y,
+                            marginBottom: "6px"
+                        },
+                        children: "扫码参与完整测试"
+                    }), (0, t.jsxs)("p", {
+                        style: {
+                            fontSize: "9px",
+                            color: h,
+                            letterSpacing: "0.04em"
+                        },
+                        children: ["/quiz/", p]
+                    })]
+                }), b ? (0, t.jsx)("div", {
+                    style: {
+                        padding: "4px",
+                        backgroundColor: "#f0ece3",
+                        border: `1px solid ${g}`,
+                        borderRadius: "3px",
+                        flexShrink: 0
+                    },
+                    children: (0, t.jsx)("img", {
+                        src: b,
+                        alt: "扫码参与测试",
+                        style: {
+                            width: "72px",
+                            height: "72px",
+                            display: "block"
+                        }
+                    })
+                }) : (0, t.jsx)("div", {
+                    style: {
+                        width: "80px",
+                        height: "80px",
+                        backgroundColor: f,
+                        border: `1px solid ${g}`,
+                        borderRadius: "3px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    },
+                    children: (0, t.jsx)("span", {
+                        style: {
+                            fontSize: "8px",
+                            color: y
+                        },
+                        children: "QR"
+                    })
+                })]
+            })]
+        })
+    }
+    e.s(["default", 0, function({
+        quiz: n
+    }) {
+        let {
+            theme: d
+        } = (0, s.useTheme)(), {
+            convert: m
+        } = (0, c.useLang)(), h = "dark" === d, [S, b] = (0, i.useState)("intro"), [j, v] = (0, i.useState)(0), [k, C] = (0, i.useState)(new Map), [w, z] = (0, i.useState)(null), [B, T] = (0, i.useState)(""), [F, H] = (0, i.useState)(""), [M, R] = (0, i.useState)(!1), [$, W] = (0, i.useState)("idle"), N = (0, i.useRef)(null), I = (0, i.useRef)(null), G = h ? "#1c1510" : "#faf7f2", L = h ? "#261c14" : "#f0ebe0", D = h ? "#2e2218" : "#ede8dc", q = h ? "#3d2e22" : "#ddd5c8", A = h ? "#d4916a" : "#c9845a", E = h ? "#ede8df" : "#1a1510", P = h ? "#9a8c7e" : "#8a7d6e", O = h ? "#1c1510" : "#e8e2d8", _ = h ? "#f0c97a" : "#b87a3a", U = "测" !== m("测"), X = (0, i.useMemo)(() => n.questions.filter(e => !e.isDeepOnly), [n.questions]), K = (0, i.useMemo)(() => {
+            var e;
+            let t, i, r, o;
+            return "result" === S ? (e = n.dimensions, t = {}, i = {}, e.forEach(e => {
+                t[e.key] = 0, i[e.key] = 0
+            }), X.forEach(r => {
+                let o = k.get(r._key);
+                if (void 0 === o) return;
+                let n = r.options[o];
+                if (!n ? .weights) return;
+                let l = n.weights.split(",").map(e => parseFloat(e.trim()) || 0);
+                e.forEach((e, r) => {
+                    let o = l[r] ? ? 0;
+                    0 !== o && (t[e.key] += o, i[e.key]++)
+                })
+            }), r = Math.max(1, k.size), o = {}, e.forEach(e => {
+                let t = i[e.key];
+                o[e.key] = Math.round(Math.min(100, t / r * 250))
+            }), o) : {}
+        }, [S, X, k, n.dimensions]), V = (0, i.useMemo)(() => {
+            var e;
+            let t, i, r, o;
+            return "result" === S ? (e = n.resultProfiles, t = 0, i = "", r = !0, Object.entries(K).forEach(([e, o]) => {
+                let n = Math.abs(o - 50);
+                n > t && (t = n, i = e, r = o >= 50)
+            }), o = `${i}-${r?"high":"low"}`, e.find(e => e.triggerDimensions ? .split(",").map(e => e.trim()).includes(o)) ? ? e[0] ? ? null) : null
+        }, [S, K, n.resultProfiles]), J = (0, i.useMemo)(() => n.dimensions.map(e => ({
+            key: e.key,
+            label: U && e.titleHant || e.title,
+            value: K[e.key] ? ? 50,
+            lowLabel: e.lowLabel,
+            highLabel: e.highLabel
+        })), [n.dimensions, K, U]), Q = (0, i.useMemo)(() => {
+            let e = new Set,
+                t = [];
+            return X.forEach(i => {
+                i.section && !e.has(i.section) && (e.add(i.section), t.push(i.section))
+            }), t
+        }, [X]), Y = X[j], Z = Math.round(k.size / X.length * 100), ee = Y ? .section ? ? "", et = Q.indexOf(ee), ei = (0, i.useCallback)(async () => {
+            if (N.current) {
+                W("generating");
+                try {
+                    let t = (await e.A(48503)).default;
+                    await document.fonts.ready;
+                    let i = await t(N.current, {
+                            scale: 2,
+                            useCORS: !0,
+                            backgroundColor: "#f0ece3",
+                            logging: !1
+                        }),
+                        r = document.createElement("a");
+                    r.download = `思想光谱-${B||"测试结果"}.png`, r.href = i.toDataURL("image/png"), r.click(), W("done"), setTimeout(() => W("idle"), 3e3)
+                } catch {
+                    W("idle")
+                }
+            }
+        }, [B]), er = U && n.titleHant || n.title;
+        return (0, t.jsxs)("main", {
+            ref: I,
+            style: {
+                minHeight: "100vh",
+                backgroundColor: G,
+                transition: "background-color 0.3s ease"
+            },
+            children: [(0, t.jsx)(l.default, {}), (0, t.jsx)("div", {
+                style: {
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    zIndex: 200,
+                    height: "3px",
+                    backgroundColor: h ? "#2a1f15" : "#e8e0d0",
+                    opacity: +("quiz" === S),
+                    transition: "opacity 0.3s ease"
+                },
+                children: (0, t.jsx)(r.motion.div, {
+                    style: {
+                        height: "100%",
+                        backgroundColor: A,
+                        originX: 0
+                    },
+                    animate: {
+                        scaleX: Z / 100
+                    },
+                    transition: {
+                        duration: .4
+                    }
+                })
+            }), (0, t.jsxs)(o.AnimatePresence, {
+                mode: "wait",
+                children: ["intro" === S && (0, t.jsx)(r.motion.div, {
+                    variants: p,
+                    initial: "hidden",
+                    animate: "show",
+                    exit: "exit",
+                    children: (0, t.jsx)(g, {
+                        quiz: n,
+                        quizTitle: er,
+                        isHant: U,
+                        isDark: h,
+                        convert: m,
+                        onStart: function() {
+                            b("quiz"), I.current ? .scrollIntoView({
+                                behavior: "smooth"
+                            })
+                        },
+                        pageBg: G,
+                        cardBg: L,
+                        borderColor: q,
+                        accentColor: A,
+                        titleColor: E,
+                        mutedColor: P
+                    })
+                }, "intro"), "quiz" === S && Y && (0, t.jsx)(r.motion.div, {
+                    variants: f,
+                    initial: "hidden",
+                    animate: "show",
+                    exit: "exit",
+                    children: (0, t.jsx)(u, {
+                        question: Y,
+                        qNumber: j + 1,
+                        total: X.length,
+                        sections: Q,
+                        currentSectionIdx: et,
+                        selectedIdx: k.get(Y._key),
+                        pendingAnswer: w,
+                        isHant: U,
+                        isDark: h,
+                        convert: m,
+                        onAnswer: function(e) {
+                            z(e);
+                            let t = new Map(k);
+                            t.set(Y._key, e), C(t), setTimeout(() => {
+                                z(null), j < X.length - 1 ? v(e => e + 1) : (b("calculating"), setTimeout(() => {
+                                    b("result"), I.current ? .scrollIntoView({
+                                        behavior: "smooth"
+                                    })
+                                }, 1800))
+                            }, 380)
+                        },
+                        onBack: function() {
+                            j > 0 && v(e => e - 1)
+                        },
+                        canGoBack: j > 0,
+                        pageBg: G,
+                        cardBg: L,
+                        cardHover: D,
+                        borderColor: q,
+                        accentColor: A,
+                        titleColor: E,
+                        mutedColor: P
+                    })
+                }, `q-${j}`), "calculating" === S && (0, t.jsx)(r.motion.div, {
+                    variants: p,
+                    initial: "hidden",
+                    animate: "show",
+                    exit: "exit",
+                    children: (0, t.jsx)(y, {
+                        isDark: h,
+                        convert: m,
+                        pageBg: G,
+                        accentColor: A,
+                        titleColor: E,
+                        mutedColor: P
+                    })
+                }, "calc"), "result" === S && V && (0, t.jsx)(r.motion.div, {
+                    variants: p,
+                    initial: "hidden",
+                    animate: "show",
+                    exit: "exit",
+                    children: (0, t.jsx)(x, {
+                        quiz: n,
+                        quizTitle: er,
+                        resultProfile: V,
+                        radarData: J,
+                        scores: K,
+                        isHant: U,
+                        isDark: h,
+                        convert: m,
+                        nickname: B,
+                        nicknameInput: F,
+                        nicknameSet: M,
+                        onNicknameChange: H,
+                        onNicknameSubmit: () => {
+                            T(F), R(!0)
+                        },
+                        shareState: $,
+                        onGenerateShare: ei,
+                        shareCardRef: N,
+                        pageBg: G,
+                        cardBg: L,
+                        borderColor: q,
+                        accentColor: A,
+                        subAccent: _,
+                        titleColor: E,
+                        mutedColor: P,
+                        inputBg: O
+                    })
+                }, "result")]
+            }), (0, t.jsx)(a.default, {})]
+        })
+    }], 154111)
+}, 48503, e => {
+    e.v(t => Promise.all(["static/chunks/10-qc793i1~os.js"].map(t => e.l(t))).then(() => t(915833)))
+}, 673378, e => {
+    e.v(t => Promise.all(["static/chunks/0kauo_1p4s347.js"].map(t => e.l(t))).then(() => t(973134)))
+}]);
